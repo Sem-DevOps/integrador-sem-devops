@@ -158,3 +158,4 @@ El pipeline permite despliegues seguros y automatizados, reduciendo errores manu
 ## Autor
 
 Proyecto desarrollado para el Trabajo Práctico Integrador de DevOps.
+Ciro villasanti y Ailín Ojeda Pytel
