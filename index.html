@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda de Mate</title>
+    <link rel="icon" type="image/svg+xml" href="img/logo.svg" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@200;300;400;600&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- Header  -->
+    <header
+      class="whb-header whb-sticky-shadow whb-scroll-slide whb-sticky-real"
+    >
+      <div class="whb-main-header">
+        <div class="whb-row whb-general-header whb-sticky-row">
+          <div class="container">
+            <div class="whb-flex-row whb-general-header-inner">
+              <!-- Logo -->
+              <div class="site-logo">
+                <div class="woodmart-logo-wrap">
+                  <a
+                    href="index.html"
+                    class="woodmart-logo woodmart-main-logo"
+                    rel="home"
+                  >
+                    <img
+                      src="img/logo.svg"
+                      alt="Tienda de Mate"
+                      class="header-logo"
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <!-- Navegación Desktop -->
+              <div class="whb-column whb-col-center whb-visible-lg">
+                <div class="whb-navigation whb-primary-menu">
+                  <nav
+                    class="main-nav site-navigation woodmart-navigation menu-center"
+                  >
+                    <ul class="menu">
+                      <li>
+                        <a href="views/tienda.html"><span>NUESTRO MATE</span></a>
+                      </li>
+                      <li>
+                        <a href="views/tutoriales.html"><span>TUTORIALES</span></a>
+                      </li>
+                      <li>
+                        <!-- <a href="views/locales.html"><span>LOCALES</span></a> -->
+                      </li>
+                      <li>
+                        <a href="views/menu-tienda.html"><span>NUESTRO MENÚ</span></a>
+                      </li>
+                      <li>
+                        <a href="views/trabaja.html"
+                          ><span>TRABAJÁ CON NOSOTROS</span></a
+                        >
+                      </li>
+                      <li>
+                        <a href="views/franquicias.html"><span>FRANQUICIAS</span></a>
+                      </li>
+                      <li>
+                        <a href="views/contacto.html"><span>CONTACTO</span></a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+              <!-- Columna derecha (vacía en desktop) -->
+              <div
+                class="whb-column whb-col-right whb-visible-lg whb-empty-column"
+              ></div>
+
+              <!-- Botón de menú móvil -->
+              <div class="whb-column whb-mobile-left whb-hidden-lg">
+                <div class="woodmart-burger-icon" id="burger-menu">
+                  <span class="woodmart-burger"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegación Móvil (nueva) -->
+      <nav class="mobile-nav">
+        <ul class="menu">
+          <li>
+            <a href="views/tienda.html"><span>NUESTRO MATE</span></a>
+          </li>
+          <li>
+            <a href="views/tutoriales.html"><span>TUTORIALES</span></a>
+          </li>
+          <li>
+            <!-- <a href="views/locales.html"><span>LOCALES</span></a> -->
+          </li>
+          <li>
+            <a href="views/menu-tienda.html"><span>NUESTRO MENÚ</span></a>
+          </li>
+          <li>
+            <a href="views/trabaja.html"><span>TRABAJÁ CON NOSOTROS</span></a>
+          </li>
+          <li>
+            <a href="views/franquicias.html"><span>FRANQUICIAS</span></a>
+          </li>
+          <li>
+            <a href="views/contacto.html"><span>CONTACTO</span></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-slider">
+        <!-- Slide 1 -->
+        <div class="hero-slide active">
+          <div
+            class="hero-slide-bg"
+            style="background-image: url('img/mate-portada.png')"
+          ></div>
+          <div class="hero-content">
+            <h2>Tu mate preferido</h2>
+            <h1>SIEMPRE CERCA</h1>
+            <p>
+              Yerbas selectas, mates artesanales y accesorios.<br />
+              Encontrá tu Tienda mas cercana y descubrí nuestros productos.
+            </p>
+            <!-- <a href="views/locales.html" class="btn-primary">ENCONTRANOS</a> -->
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slide">
+          <div
+            class="hero-slide-bg"
+            style="background-image: url('img/mate-portada.png')"
+          ></div>
+          <div class="hero-content">
+            <h2>Descubrí nuestra selección</h2>
+            <h1>MATES ARTESANALES</h1>
+            <p>
+              Cada pieza cuenta una historia única.<br />
+              Elegí el mate que más se adapte a tu estilo.
+            </p>
+            <a href="views/tienda.html" class="btn-primary">VER MÁS</a>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slide">
+          <div
+            class="hero-slide-bg"
+            style="background-image: url('img/mate-portada.png')"
+          ></div>
+          <div class="hero-content">
+            <h2>Expertos en yerba mate</h2>
+            <h1>TRADICIÓN Y CALIDAD</h1>
+            <p>
+              Las mejores yerbas seleccionadas.<br />
+              Descubrí el verdadero sabor del mate.
+            </p>
+            <a href="views/menu-tienda.html" class="btn-primary">EXPLORAR</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-nav">
+        <button class="hero-nav-prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="hero-nav-next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Sección Productos -->
+    <section class="products">
+      <div class="container">
+        <div class="section-title">
+          <h2>NUESTROS PRODUCTOS</h2>
+        </div>
+        <div class="products-grid">
+          <!-- Producto 1 -->
+          <div class="product-card">
+            <h3>Mate Imperial</h3>
+            <img src="img/productos/mate-imperial.png" alt="Mate Imperial" />
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-camionero.png" alt="Mate Camionero" />
+            <h3>Mate Camionero</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-torpedo.png" alt="Mate Torpedo" />
+            <h3>Mate Torpedo</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-mathienzo.png" alt="Mate Mathienzo" />
+            <h3>Mate Mathienzo</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-mathienzo.png" alt="Mate Imperial" />
+            <h3>Mate Artesanal</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-torpedo.png" alt="Mate Imperial" />
+            <h3>Mate Moderno</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-camionero.png" alt="Mate Imperial" />
+            <h3>Mate Imperial</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="img/productos/mate-imperial.png" alt="Mate Imperial" />
+            <h3>Mate Vidrio</h3>
+            <div class="product-overlay">
+              <div class="overlay-content">
+                <p class="overlay-desc">
+                  DISFRUTÁ LA EXPERIENCIA TIENDA EN TU CASA.
+                </p>
+                <div class="intensity-section">
+                  <h4>CARACTERÍSTICAS</h4>
+                  <div class="intensity-bars">
+                    <div class="intensity-item">
+                      <span class="intensity-label">TRADICIONAL</span>
+                      <span class="intensity-sublabel">(Sabor clásico)</span>
+                      <div class="intensity-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">SUAVIDAD</span>
+                      <span class="intensity-sublabel">(Amargor bajo)</span>
+                      <div class="intensity-bar" style="width: 40%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">CUERPO</span>
+                      <span class="intensity-sublabel">(Consistencia)</span>
+                      <div class="intensity-bar" style="width: 60%"></div>
+                    </div>
+                    <div class="intensity-item">
+                      <span class="intensity-label">DURABILIDAD</span>
+                      <span class="intensity-sublabel">(Resistencia)</span>
+                      <div class="intensity-bar" style="width: 70%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Promocional -->
+    <section class="promo-section">
+      <div class="container">
+        <div class="promo-grid">
+          <div class="promo-card">
+            <img src="img/mate-experto.png" alt="Aprende a cebar mate" />
+            <div class="promo-content">
+              <span>Aprendé a preparar tu mate como un experto</span>
+              <h3>SECRETOS DEL MATERO</h3>
+              <a href="views/tutoriales.html" class="btn-dark">VER</a>
+            </div>
+          </div>
+          <div class="promo-card">
+            <img
+              src="img/productos/nuestras-yerbas.png"
+              alt="Nuestros productos"
+            />
+            <div class="promo-content">
+              <span
+                >Conocé todo lo que podés encontrar en nuestros locales</span
+              >
+              <h3>NUESTRAS YERBAS</h3>
+              <a href="views/menu-tienda.html" class="btn-dark">VER</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Sección ¿Cuál vas a elegir hoy? -->
+    <section class="choose-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="subtitle">NUESTRO MATE</span>
+          <h2 class="title">¿CUÁL VAS A ELEGIR HOY?</h2>
+        </div>
+
+        <div class="mate-types-grid">
+          <!-- Columna izquierda -->
+          <div class="left-column">
+            <div class="mate-type">
+              <h3>IMPERIAL</h3>
+              <p>
+                Nuestro tradicional mate de calabaza, el favorito de la casa.
+                Con virola de alpaca y detalles artesanales, este mate te
+                brindará una experiencia única y tradicional. Ideal para los
+                amantes del mate tradicional.
+              </p>
+            </div>
+            <div class="mate-type">
+              <h3>CAMIONERO</h3>
+              <p>
+                Robusto y confiable, este mate de calabaza forrado en cuero es
+                el compañero perfecto para tus viajes. Su diseño resistente y
+                práctico lo hace ideal para el día a día.
+              </p>
+            </div>
+            <div class="mate-type">
+              <h3>TORPEDO</h3>
+              <p>
+                Con su forma característica y elegante, este mate de calabaza es
+                perfecto para quienes buscan un mate con personalidad. Su diseño
+                alargado permite una mayor capacidad.
+              </p>
+            </div>
+          </div>
+
+          <!-- Imagen central -->
+          <div class="center-image">
+            <img
+              src="img/productos/mate-imperial-playa.png"
+              alt="Mate cebado tradicional"
+            />
+          </div>
+
+          <!-- Columna derecha -->
+          <div class="right-column">
+            <div class="mate-type">
+              <h3>MATHIENZO</h3>
+              <p>
+                Nuestro mate premium, elaborado con las mejores calabazas
+                seleccionadas y trabajado artesanalmente. Cada pieza es única,
+                con detalles en alpaca y cuero de primera calidad.
+              </p>
+            </div>
+            <div class="mate-type">
+              <h3>ARTESANAL</h3>
+              <p>
+                Si buscás un mate con historia, nuestros mates artesanales son
+                creados por artesanos locales, cada uno con su propio estilo y
+                personalidad. Perfectos para quienes valoran lo auténtico.
+              </p>
+            </div>
+            <div class="mate-type">
+              <h3>MODERNO</h3>
+              <p>
+                Para los amantes del diseño contemporáneo, nuestra línea moderna
+                combina materiales innovadores con la tradición del mate.
+                Prácticos y elegantes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Sección buscador de tiendas-->
+    <section class="store-finder">
+      <div class="store-finder-content">
+        <h2>SIEMPRE HAY UN</h2>
+        <h1>MATECITO CERCA TUYO</h1>
+        <p>Encontrá nuestra sucursal más cercana.</p>
+        <a href="#" class="btn-ingresar">INGRESAR</a>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <img src="img/logo.svg" alt="Tienda de Mate" class="footer-logo" />
+          </div>
+          <div class="footer-col">
+            <h4>Contenidos</h4>
+            <ul>
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="views/tienda.html">Nuestro Mate</a></li>
+              <!-- <li><a href="locales.html">Locales</a></li> -->
+              <li><a href="views/menu-tienda.html">Nuestro menú</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Necesitás Ayuda</h4>
+            <ul>
+              <li><a href="views/tutoriales.html">Tutoriales</a></li>
+              <li><a href="views/trabaja.html">Trabajá con nosotros</a></li>
+              <li><a href="views/franquicias.html">Franquicias</a></li>
+              <li><a href="views/contacto.html">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Newsletter</h4>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Tu email" />
+              <button type="submit">Suscribirme</button>
+            </form>
+            <h4 class="conectate">CONECTATE CON NOSOTROS</h4>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <div class="container">
+          <p>© 2024 Tienda de Mate - Todos los derechos reservados</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

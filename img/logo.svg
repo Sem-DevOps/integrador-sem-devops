@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70">
+    <style>
+        .main-text { 
+            fill: #FFFFFF;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .secondary-text {
+            fill: #FFFFFF;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+    </style>
+    <text x="10" y="30" class="main-text" font-size="42">TIENDA</text>
+    <text x="25" y="55" class="secondary-text" font-size="24">DE MATE</text>
+</svg>
