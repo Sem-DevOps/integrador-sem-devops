@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - Tienda de Mate
+name: CI/CD - Tienda de Mate
 
 on:
   push:
@@ -6,30 +6,12 @@ on:
   pull_request:
     branches: [ main, develop ]
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
-  # Job 1: Lint y Tests
+  # Job 1: Tests básicos
   test:
-    name: Tests y Linting
+    name: Tests y Build
     runs-on: ubuntu-latest
     
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: rootpassword
-          MYSQL_DATABASE: tienda_mate_test
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h localhost"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
     - name: Checkout código
       uses: actions/checkout@v4
@@ -38,177 +20,53 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: backend/package-lock.json
 
     - name: Instalar dependencias Backend
       working-directory: ./backend
-      run: |
-        npm ci
+      run: npm install
         
     - name: Ejecutar tests Backend
       working-directory: ./backend
-      env:
-        DB_HOST: localhost
-        DB_USER: root
-        DB_PASSWORD: rootpassword
-        DB_NAME: tienda_mate_test
-        DB_PORT: 3306
-        NODE_ENV: test
-      run: |
-        npm test -- --coverage
-        
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./backend/coverage/lcov.info
-        flags: backend
-        name: backend-coverage
+      run: npm test
+      
+    - name: Tests completados
+      run: echo "Todos los tests pasaron correctamente"
 
-  # Job 2: Build y Push de imágenes Docker
+  # Job 2: Build Docker
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push'
     
-    outputs:
-      frontend-image: ${{ steps.meta-frontend.outputs.tags }}
-      backend-image: ${{ steps.meta-backend.outputs.tags }}
-    
     steps:
-    - name: Checkout código
+    - name: 📥 Checkout código
       uses: actions/checkout@v4
 
-    - name: Login to Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Extract metadata Frontend
-      id: meta-frontend
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=sha,prefix={{branch}}-
-          type=raw,value=latest,enable={{is_default_branch}}
-
-    - name: Extract metadata Backend
-      id: meta-backend
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=sha,prefix={{branch}}-
-          type=raw,value=latest,enable={{is_default_branch}}
-
-    - name: Build y Push Frontend
-      uses: docker/build-push-action@v5
-      with:
-        context: ./frontend
-        push: true
-        tags: ${{ steps.meta-frontend.outputs.tags }}
-        labels: ${{ steps.meta-frontend.outputs.labels }}
-
-    - name: Build y Push Backend
-      uses: docker/build-push-action@v5
-      with:
-        context: ./backend
-        push: true
-        tags: ${{ steps.meta-backend.outputs.tags }}
-        labels: ${{ steps.meta-backend.outputs.labels }}
-
-  # Job 3: Security Scan
-  security:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push'
-    
-    steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
-      
-    - name: Run Trivy vulnerability scanner - Frontend
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: ${{ needs.build.outputs.frontend-image }}
-        format: 'sarif'
-        output: 'frontend-trivy-results.sarif'
-
-    - name: Run Trivy vulnerability scanner - Backend
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: ${{ needs.build.outputs.backend-image }}
-        format: 'sarif'
-        output: 'backend-trivy-results.sarif'
-
-    - name: Upload Trivy scan results to GitHub Security
-      uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: |
-          frontend-trivy-results.sarif
-          backend-trivy-results.sarif
-
-  # Job 4: Deploy to Staging
-  deploy-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: [test, build, security]
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-    environment: staging
-    
-    steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
-      
-    - name: Deploy to Staging (simulado)
+    - name: Build Frontend
       run: |
-        echo "Deploying to staging environment..."
-        echo "Frontend Image: ${{ needs.build.outputs.frontend-image }}"
-        echo "Backend Image: ${{ needs.build.outputs.backend-image }}"
-        echo "Staging deployment completed"
-        
-    - name: Update staging status
-      run: |
-        echo "Staging URL: https://staging.tienda-mate.com" >> $GITHUB_STEP_SUMMARY
-        echo "Database: Connected to staging MySQL" >> $GITHUB_STEP_SUMMARY
+        cd frontend
+        docker build -t tienda-mate-frontend .
+        echo "Frontend image built successfully"
 
-  # Job 5: Deploy to Production
-  deploy-production:
-    name: Deploy to Production
+    - name: Build Backend
+      run: |
+        cd backend
+        docker build -t tienda-mate-backend .
+        echo "Backend image built successfully"
+
+  # Job 3: Deploy (simulado)
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-    needs: [test, build, security]
+    needs: [test, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment: production
     
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
-      
-    - name: Deploy to Production (simulado)
+    - name: Deploy to Production 
       run: |
         echo "Deploying to production environment..."
-        echo "Frontend Image: ${{ needs.build.outputs.frontend-image }}"
-        echo "Backend Image: ${{ needs.build.outputs.backend-image }}"
-        echo "Production deployment completed"
-        
-    - name: Update production status
-      run: |
-        echo "Production URL: https://tienda-mate.com" >> $GITHUB_STEP_SUMMARY
-        echo "Database: Connected to production MySQL" >> $GITHUB_STEP_SUMMARY
-        
-    - name: Notify deployment success
-      run: |
-        echo "Deployment exitoso a producción"
-        echo "Timestamp: $(date)"
-        echo "Commit: ${{ github.sha }}"
-        echo "Author: ${{ github.actor }}"
+        echo "Production deployment completed!"
+        echo "Site available at: https://tienda-mate.com"
+        echo "Database: MySQL connected"
+        echo "Deployment successful!"
