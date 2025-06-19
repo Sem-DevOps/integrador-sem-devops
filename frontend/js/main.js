@@ -1,3 +1,6 @@
+// URL del backend API
+const API_URL = 'http://localhost:3000/api';
+
 document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('.whb-header');
     if (header) {
@@ -162,6 +165,119 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     };
+
+    // Función para mostrar mensajes al usuario
+    const showMessage = (message, type = 'success') => {
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+            ${type === 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'}
+        `;
+        messageDiv.textContent = message;
+        document.body.appendChild(messageDiv);
+
+        setTimeout(() => {
+            messageDiv.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+            }, 300);
+        }, 3000);
+    };
+
+    // Función para enviar formularios
+    const submitForm = async (endpoint, formData, successMessage) => {
+        try {
+            const response = await fetch(`${API_URL}${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showMessage(successMessage, 'success');
+                return true;
+            } else {
+                showMessage(result.error || 'Error al enviar el formulario', 'error');
+                return false;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('Error de conexión. Inténtalo de nuevo.', 'error');
+            return false;
+        }
+    };
+
+    // Manejar formulario de contacto
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nombre: contactForm.nombre.value,
+                email: contactForm.email.value,
+                asunto: contactForm.asunto.value,
+                mensaje: contactForm.mensaje.value
+            };
+
+            const success = await submitForm('/contacto', formData, '¡Mensaje enviado correctamente!');
+            if (success) {
+                contactForm.reset();
+            }
+        });
+    }
+
+    // Manejar formulario de trabajo
+    const trabajoForm = document.querySelector('.trabajo-form');
+    if (trabajoForm) {
+        trabajoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nombre: trabajoForm.nombre.value,
+                apellido: trabajoForm.apellido.value,
+                email: trabajoForm.email.value,
+                telefono: trabajoForm.telefono.value,
+                puesto: trabajoForm.puesto.value,
+                mensaje: trabajoForm.mensaje ? trabajoForm.mensaje.value : ''
+            };
+
+            const success = await submitForm('/trabajo', formData, '¡Solicitud enviada correctamente!');
+            if (success) {
+                trabajoForm.reset();
+            }
+        });
+    }
+
+    // Manejar formularios de newsletter
+    const newsletterForms = document.querySelectorAll('.newsletter-form');
+    newsletterForms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const emailInput = form.querySelector('input[type="email"]');
+            const formData = {
+                email: emailInput.value
+            };
+
+            const success = await submitForm('/newsletter', formData, '¡Suscripción exitosa!');
+            if (success) {
+                emailInput.value = '';
+            }
+        });
+    });
 
     initMobileMenu();
     initSlider();
