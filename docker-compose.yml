@@ -53,7 +53,7 @@ services:
   # Frontend Nginx
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend-react
       dockerfile: Dockerfile
     container_name: tienda-mate-frontend
     restart: always

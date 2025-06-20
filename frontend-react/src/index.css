@@ -1,4 +1,4 @@
-/*///////////////// AJUSTES GENERALES //////////////////*/
+/* Estilos generales */
 :root {
   --primary-color: #2d5a27;
   --secondary-color: #c7a17a;
@@ -36,7 +36,7 @@ a {
   padding: 0 15px;
 }
 
-/*///////////////// HEADER //////////////////*/
+/* Header */
 .whb-header {
   position: fixed;
   width: 100%;
@@ -143,7 +143,7 @@ a {
   height: 3px;
   background-color: rgba(0, 0, 0, 0.05);
 }
-/*///////////////// HERO SECTION //////////////////*/
+/* Sección principal */
 .hero {
   min-height: 100vh;
   overflow: hidden;
@@ -293,7 +293,7 @@ a {
   right: 40px;
 }
 
-/*///////////////// PRODUCTOS //////////////////*/
+/* Productos */
 .products {
   padding: 5vh 0;
   width: 100%;
@@ -483,7 +483,7 @@ a {
   background-color: #8b4513;
 }
 
-/*///////////////// SECCIÓN PROMO //////////////////*/
+/* Promociones */
 .promo-section {
   padding: 4rem 0;
 }
@@ -555,7 +555,7 @@ a {
   color: #333;
 }
 
-/*///////////////// SECCIÓN ELEGIR MATE //////////////////*/
+/* Tipos de mate */
 .choose-section {
   padding: 80px 0;
   background-color: #fff;
@@ -644,7 +644,7 @@ a {
   text-align: left;
 }
 
-/*///////////////// SECCIÓN BUSCADOR DE TIENDAS //////////////////*/
+/* Buscador de tiendas */
 .store-finder {
   position: relative;
   min-height: 80vh;
@@ -653,13 +653,6 @@ a {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-.store-finder {
-  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-    url("tu-imagen.jpg");
-  background-size: cover;
-  background-position: center;
 }
 
 .store-finder-content {
@@ -781,7 +774,7 @@ a {
   background-color: #b89575;
 }
 
-/* Redes Sociales */
+/* Footer */
 .social-links {
   display: flex;
   gap: 10px;
@@ -804,7 +797,6 @@ a {
   margin-top: 30px;
 }
 
-/* Copyright */
 .copyright {
   border-top: 1px solid #333;
   padding: 20px 0;
@@ -813,13 +805,12 @@ a {
   color: #666;
 }
 
-/* Logo */
 .footer-logo {
   max-width: 126px;
   height: auto;
 }
 
-/*///////////////// TIENDA PRODUCTOS //////////////////*/
+/* Tienda */
 .whb-header-dark {
   position: relative;
   background-color: #151515;
@@ -849,7 +840,7 @@ a {
 }
 
 
-/*///////////////// TUTORIALES //////////////////*/
+/* Tutoriales */
 
 .tutorial-intro {
   padding: 4vh 0 4vh;
@@ -939,7 +930,7 @@ a {
   align-self: flex-start;
 }
 
-/*///////////////// MENU YERBA //////////////////*/
+/* Menú */
 .menu-grid-section {
   padding: 60px 0;
   background-color: #fff;
@@ -1000,7 +991,7 @@ a {
   position: absolute;
   bottom: 30px;
   left: 30px;
-  color: #fff;
+  color: #333;
   z-index: 2;
 }
 
@@ -1027,7 +1018,7 @@ a {
 }
 
 
-/*///////////////// TRABAJA CON NOSOTROS //////////////////*/
+/* Formularios */
 .trabajo-section {
   padding: 4vh 0;
   background-color: #fff;
@@ -1056,7 +1047,6 @@ a {
   margin-bottom: 30px;
 }
 
-/* Estilos del formulario */
 .trabajo-form {
   margin: 0 auto;
 }
@@ -1097,7 +1087,6 @@ a {
   min-height: 120px;
 }
 
-/* Estilos para el input de archivo */
 .file-input-wrapper {
   position: relative;
   display: flex;
@@ -1112,6 +1101,12 @@ a {
   border: 1px solid #ddd;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.file-input-text:hover {
+  background-color: #e0e0e0;
 }
 
 .file-input-message {
@@ -1120,7 +1115,6 @@ a {
   font-size: 14px;
 }
 
-/* Botón de enviar */
 .btn-enviar {
   background-color: var(--secondary-color);
   color: white;
@@ -1138,7 +1132,7 @@ a {
 
 
 
-/*///////////////// CONTACTO //////////////////*/
+/* Contacto */
 .contact-section {
   padding: 80px 0;
   background-color: #fff;
@@ -1205,7 +1199,7 @@ a {
 
 
 
-/*///////////////// RESPONSIVE //////////////////*/
+/* Responsive */
 
 .woodmart-burger-icon {
   display: none;
@@ -1502,7 +1496,6 @@ a {
 }
 
 .menu-item::before {
-  content: "Imagen no disponible";
   position: absolute;
   top: 50%;
   left: 50%;

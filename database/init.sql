@@ -1,8 +1,8 @@
--- Crear base de datos si no existe
+-- Base de datos
 CREATE DATABASE IF NOT EXISTS tienda_mate;
 USE tienda_mate;
 
--- Tabla para formulario de contacto
+-- Contactos
 CREATE TABLE IF NOT EXISTS contactos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS contactos (
     estado ENUM('pendiente', 'respondido', 'cerrado') DEFAULT 'pendiente'
 );
 
--- Tabla para solicitudes de trabajo
+-- Trabajos
 CREATE TABLE IF NOT EXISTS solicitudes_trabajo (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -22,12 +22,47 @@ CREATE TABLE IF NOT EXISTS solicitudes_trabajo (
     telefono VARCHAR(20) NOT NULL,
     puesto VARCHAR(150) NOT NULL,
     mensaje TEXT,
+    cv_path VARCHAR(255),
     cv_filename VARCHAR(255),
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado ENUM('recibida', 'en_revision', 'entrevista', 'rechazada', 'contratada') DEFAULT 'recibida'
 );
 
--- Tabla para solicitudes de franquicias
+-- Agregar columnas para archivos CV
+SET @sql = (
+  SELECT IF(
+    COUNT(*) = 0,
+    'ALTER TABLE solicitudes_trabajo ADD COLUMN cv_path VARCHAR(255) AFTER mensaje;',
+    'SELECT "cv_path column already exists";'
+  )
+  FROM information_schema.columns
+  WHERE table_schema = DATABASE()
+    AND table_name = 'solicitudes_trabajo'
+    AND column_name = 'cv_path'
+);
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql2 = (
+  SELECT IF(
+    COUNT(*) = 0,
+    'ALTER TABLE solicitudes_trabajo ADD COLUMN cv_filename VARCHAR(255) AFTER cv_path;',
+    'SELECT "cv_filename column already exists";'
+  )
+  FROM information_schema.columns
+  WHERE table_schema = DATABASE()
+    AND table_name = 'solicitudes_trabajo'
+    AND column_name = 'cv_filename'
+);
+
+PREPARE stmt2 FROM @sql2;
+EXECUTE stmt2;
+DEALLOCATE PREPARE stmt2;
+
+
+-- Franquicias
 CREATE TABLE IF NOT EXISTS solicitudes_franquicias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,

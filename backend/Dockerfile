@@ -5,8 +5,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --only=production
-
+RUN npm install 
 COPY src/ ./src/
 
 RUN addgroup -g 1001 -S nodejs
