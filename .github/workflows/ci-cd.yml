@@ -45,7 +45,7 @@ jobs:
 
     - name: Build Frontend
       run: |
-        cd frontend
+        cd frontend-react
         docker build -t tienda-mate-frontend .
         echo "Frontend image built successfully"
 
