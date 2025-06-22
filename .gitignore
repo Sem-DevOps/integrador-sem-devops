@@ -7,10 +7,7 @@
 # Credenciales y configuraciones sensibles
 config/secrets.yml
 secrets/
-*.pem
-*.key
-*.crt
-*.p12
+
 
 # Docker - archivos temporales
 .dockerignore
@@ -50,12 +47,6 @@ build/
 target/
 temp/
 
-# Certificados SSL (si usas HTTPS)
-*.crt
-*.key
-*.pem
-*.p12
-ssl/
 
 # Backups
 *.backup
