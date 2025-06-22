@@ -15,6 +15,8 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Deploy Backend Container
+    outputs:
+      backend_url: ${{ steps.get_backend_url.outputs.backend_url }}
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
@@ -46,6 +48,24 @@ jobs:
           resourceGroup: ${{ vars.RESOURCE_GROUP_NAME }}
           imageToDeploy: ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:${{ github.sha }}
 
+      - name: 'Get Backend URL'
+        id: get_backend_url
+        run: |
+          # Obtener la URL actual del Container App
+          BACKEND_URL=$(az containerapp show \
+            --name tienda-mate-backend \
+            --resource-group ${{ vars.RESOURCE_GROUP_NAME }} \
+            --query properties.configuration.ingress.fqdn \
+            --output tsv)
+          
+          # Agregar https:// si no lo tiene
+          if [[ ! $BACKEND_URL == https://* ]]; then
+            BACKEND_URL="https://${BACKEND_URL}"
+          fi
+          
+          echo "Backend URL: $BACKEND_URL"
+          echo "backend_url=$BACKEND_URL" >> $GITHUB_OUTPUT
+
   # Deploy Frontend (Static Web Apps)
   deploy_frontend:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -56,6 +76,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: Build And Deploy Static Web App
         id: builddeploy
@@ -69,8 +94,8 @@ jobs:
           output_location: "dist"
           
         env:
-          # URL del backend Azure Container Apps
-          VITE_API_URL: ${{ vars.BACKEND_API_URL || 'https://tienda-mate-backend.azurecontainerapps.io' }}
+          # URL dinámica del backend obtenida en el job anterior
+          VITE_API_URL: ${{ needs.deploy_backend.outputs.backend_url }}
 
   # Close PR job
   close_pull_request_job:
