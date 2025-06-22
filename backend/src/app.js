@@ -65,8 +65,16 @@ const upload = multer({
     }
 });
 
+// Permitir todos los orígenes
+const corsOptions = {
+    origin: true,  
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Servir archivos subidos
