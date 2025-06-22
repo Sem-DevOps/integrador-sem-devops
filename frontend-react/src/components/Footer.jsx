@@ -1,7 +1,7 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { showMessage } from '../utils/toast';
-const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const Footer = () => {
   const [email, setEmail] = useState('');

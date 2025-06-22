@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { showMessage } from '../utils/toast';
-const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

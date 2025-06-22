@@ -39,7 +39,7 @@ jobs:
           
         env:
           # Esta variable se usará durante el build para configurar la API URL
-          REACT_APP_API_URL: ${{ vars.BACKEND_API_URL || 'http://localhost:3000' }}
+          VITE_API_URL: ${{ vars.BACKEND_API_URL || 'http://localhost:3000' }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
