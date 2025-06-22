@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { showMessage } from '../utils/toast';
+const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const Contact = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:3000/api/contacto', {
+      const response = await fetch(`${API_URL}/api/contacto`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

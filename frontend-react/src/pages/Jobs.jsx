@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { showMessage } from "../utils/toast";
+const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 const Jobs = () => {
   const [formData, setFormData] = useState({
@@ -69,7 +70,7 @@ const Jobs = () => {
         );
       }
       console.log(formDataToSend);
-      const response = await fetch("http://localhost:3000/api/trabajo", {
+      const response = await fetch(`${API_URL}/api/trabajo`, {
         method: "POST",
         body: formDataToSend, 
       });

@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { showMessage } from '../utils/toast';
+const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +10,7 @@ const Footer = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:3000/api/newsletter', {
+      const response = await fetch(`${API_URL}/api/newsletter`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

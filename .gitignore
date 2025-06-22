@@ -29,11 +29,6 @@ npm-debug.log*
 package-lock.json
 .npm
 
-
-# Ansible (para IaC si lo usas)
-*.retry
-.vault_pass
-
 # Logs generales
 *.log
 logs/

@@ -1,0 +1,21 @@
+
+# Azure Service Principal
+azure_subscription_id = "TU_SUBSCRIPTION_ID"
+azure_tenant_id       = "TU_TENANT_ID"
+azure_client_id       = "TU_APP_ID_AQUI"           # appId del Service Principal
+azure_client_secret   = "TU_PASSWORD_AQUI"        # password del Service Principal
+
+# Configuración del proyecto
+project_name        = "tienda-mate"
+environment         = "prod"
+location           = "East US"
+resource_group_name = "rg-tienda-mate-prod"
+
+# Database settings
+mysql_admin_username = "mateadmin"
+mysql_admin_password = "TuPasswordSeguro123!"      # Opcional, se genera automáticamente si está vacío
+
+# App Service settings
+app_service_plan_sku = "B1"              
+mysql_sku_name      = "B_Standard_B1s"     
+mysql_storage_gb    = 20                   
