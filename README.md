@@ -1,92 +1,131 @@
 # Trabajo Práctico Integrador de DevOps - Tienda de Mate
 
+## 🌐 Aplicación Desplegada
+
+**Frontend**: https://tienda-mate.devoperations-it.workers.dev/
+**Backend API**: https://tienda-mate-backend.azurecontainerapps.io
+
 ## Descripción del Proyecto
 
-Este proyecto implementa una aplicación web completa de una tienda de mate, aplicando las prácticas y herramientas de DevOps solicitadas en el trabajo práctico. La aplicación incluye frontend, backend con API REST, base de datos MySQL y está completamente dockerizada con pipeline de CI/CD automatizado.
+Este proyecto implementa una aplicación web completa de una tienda de mate desplegada en Azure Cloud, aplicando las prácticas y herramientas de DevOps modernas. La aplicación incluye frontend React, backend Node.js con API REST, base de datos MySQL y está completamente containerizada con pipeline de CI/CD automatizado.
 
 ## Tecnologías Utilizadas
 
 **Frontend:**
-- HTML5, CSS3, JavaScript vanilla
-- Nginx como servidor web
-- Diseño responsive
+- React 18 + Vite
+- CSS3 con diseño responsive
+- Formularios interactivos
 
 **Backend:**
 - Node.js con Express.js
-- Conexión a base de datos MySQL
-- API REST para formularios
+- API REST completa
+- Manejo de archivos con Multer
+- Migraciones automáticas de base de datos
 
 **Base de Datos:**
-- MySQL 8.0
+- Azure MySQL Flexible Server
 - Tablas para contactos, solicitudes de trabajo, franquicias y newsletter
 
-**DevOps:**
-- Docker y Docker Compose
-- GitHub Actions para CI/CD
-- Tests automatizados con Jest
+**Cloud & DevOps:**
+- **Azure Container Apps** (Backend)
+- **Azure Static Web Apps** (Frontend)
+- **Cloudflare Workers** (Dominio personalizado)
+- **Terraform** (Infrastructure as Code)
+- **GitHub Actions** (CI/CD)
+- **Docker** (Containerización)
+- **Tests automatizados** con Jest
 
 ## Estructura del Proyecto
 
 ```
-├── frontend/           # Sitio web HTML/CSS/JS
+├── frontend-react/     # Frontend React + Vite
 ├── backend/           # API Node.js + Express
-├── database/          # Scripts SQL
+├── database/          # Scripts SQL + Migraciones
+├── terraform/         # Infrastructure as Code
 ├── .github/workflows/ # Pipeline CI/CD
-├── docker-compose.yml # Orquestación servicios
+├── docker-compose.yml # Desarrollo local
+├── DEPLOYMENT-GUIDE.md # Guía completa de deployment
 └── README.md         # Documentación
 ```
+
+## 🚀 Links Importantes
+
+- **📖 Guía Completa de Deployment**: [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md)
+- **📊 Guía de Monitoreo**: [MONITORING.md](./MONITORING.md)
+- **🌐 Aplicación Live**: https://tienda-mate.devoperations-it.workers.dev/
+- **🔧 Backend API**: https://tienda-mate-backend.azurecontainerapps.io
+- **🚀 Pipeline CI/CD**: [GitHub Actions](./.github/workflows/frontend-deploy.yml)
+- **📈 Application Insights**: Azure Portal → Application Insights → tienda-mate-insights
 
 ## Cumplimiento de Requisitos
 
 ### 1. Desarrollo de la aplicación ✓
-- **Backend:** Node.js con Express
-- **Frontend:** HTML/CSS/JS con formularios funcionales
-- **Base de datos:** MySQL con 4 tablas relacionales
+- **Backend:** Node.js con Express desplegado en Azure Container Apps
+- **Frontend:** React con Vite desplegado en Azure Static Web Apps
+- **Base de datos:** Azure MySQL Flexible Server con 4 tablas relacionales
 - **Funcionalidad:** Formularios de contacto, trabajo, franquicias y newsletter
+- **Dominio personalizado:** Cloudflare Workers como proxy
 
 ### 2. Control de versiones con Git ✓
-- Repositorio en GitHub
-- Estructura de branches (main, develop)
-- Commits descriptivos y organizados
+- Repositorio en GitHub con historial completo
+- Estructura de branches organizada
+- Commits descriptivos y documentados
+- Tags de versiones
 
-### 3. Dockerización ✓
-- **Dockerfile backend:** Imagen Node.js con aplicación
-- **Dockerfile frontend:** Imagen Nginx sirviendo sitio estático
-- **docker-compose.yml:** Orquesta frontend + backend + MySQL
-- Múltiples servicios funcionando en conjunto
+### 3. Containerización ✓
+- **Backend Dockerfile:** Imagen Node.js optimizada
+- **Frontend Dockerfile:** Imagen Nginx para desarrollo local
+- **docker-compose.yml:** Orquestación completa para desarrollo
+- **Azure Container Apps:** Deployment serverless en cloud
 
 ### 4. Automatización de tests ✓
 - Tests unitarios con Jest
 - Tests de integración para endpoints API
 - Mocks de base de datos para testing
-- Coverage de funcionalidades principales
+- Pipeline automático ejecuta tests en cada push
 
 ### 5. CI/CD ✓
-- **Pipeline GitHub Actions** configurado
-- **Build:** Construye aplicación y imágenes Docker
-- **Tests:** Ejecuta suite de tests automáticamente
-- **Deploy:** Simula despliegue a producción
+- **GitHub Actions** con pipeline completo
+- **Build:** Construye y sube imágenes Docker a Azure Container Registry
+- **Tests:** Ejecuta suite completa automáticamente
+- **Deploy:** Deployment automático a Azure Container Apps y Static Web Apps
+- **Environments:** Producción funcionando con deployment automático
 
-### 6. Documentación ✓
-- README completo con instrucciones
-- Documentación de endpoints API
-- Guía de instalación y ejecución
-- Diagramas del flujo DevOps
+### 6. Infrastructure as Code ✓
+- **Terraform:** Infraestructura completamente definida como código
+- **Azure Provider:** Gestión de recursos cloud
+- **State Management:** Estado de infraestructura versionado
+- **Outputs:** Variables automáticas para CI/CD
 
-## Instrucciones para Ejecutar Localmente
+### 7. Cloud Deployment ✓
+- **Aplicación funcionando en producción**
+- **Alta disponibilidad** con Azure Container Apps
+- **SSL automático** y dominio personalizado
+- **Escalabilidad** automática basada en demanda
+
+### 8. Monitoreo ✅ (Opcional)
+- **Azure Application Insights** integrado
+- **Logs automáticos** de toda la aplicación
+- **Métricas de performance** en tiempo real
+- **Alertas proactivas** para errores y performance
+- **Dashboards personalizados** con KPIs de negocio
+- **Trazabilidad completa** de requests y errores
+- **Log Analytics** para queries avanzadas
+
+## Instrucciones para Desarrollo Local
 
 ### Con Docker (Recomendado)
 
 ```bash
 # Clonar repositorio
-git clone [url-repositorio]
+git clone https://github.com/tu-usuario/integrador-sem-devops
 cd integrador-sem-devops
 
 # Levantar servicios
 docker-compose up --build
 
 # Acceder a:
-# Frontend: http://localhost:8080
+# Frontend: http://localhost:5173  (React + Vite)
 # Backend: http://localhost:3000
 # MySQL: localhost:3307
 ```
@@ -99,9 +138,28 @@ cd backend
 npm install
 npm start
 
-# Frontend (servidor local)
-cd frontend
-python -m http.server 8080
+# Frontend React
+cd frontend-react
+npm install
+npm run dev
+```
+
+### Variables de entorno
+
+Archivo `.env` en carpeta backend:
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=rootpassword
+DB_NAME=tienda_mate
+DB_PORT=3307
+PORT=3000
+NODE_ENV=development
+```
+
+Archivo `.env.local` en carpeta frontend-react:
+```env
+VITE_API_URL=http://localhost:3000
 ```
 
 ## Tests
@@ -114,46 +172,70 @@ npm run test:coverage # Con reporte coverage
 
 ## Endpoints API
 
+**Base URL**: https://tienda-mate-backend.azurecontainerapps.io
+
+- `GET /` - Health check API
 - `POST /api/contacto` - Enviar mensaje de contacto
-- `POST /api/trabajo` - Solicitud de trabajo
+- `POST /api/trabajo` - Solicitud de trabajo (con upload de CV)
 - `POST /api/franquicias` - Consulta franquicia
 - `POST /api/newsletter` - Suscripción newsletter
-- `GET /` - Health check API
 
 ## Pipeline DevOps
 
-El pipeline se ejecuta automáticamente en cada push a main/develop:
+El pipeline de GitHub Actions se ejecuta automáticamente en cada push a `main`:
 
-1. **Tests:** Instala dependencias y ejecuta tests
-2. **Build:** Construye imágenes Docker
-3. **Deploy:** Simula despliegue a producción
+### Backend Pipeline:
+1. **Checkout** código
+2. **Login** a Azure
+3. **Build** imagen Docker del backend
+4. **Push** a Azure Container Registry
+5. **Deploy** a Azure Container Apps
 
-## Variables de Entorno
+### Frontend Pipeline:
+1. **Checkout** código
+2. **Build** aplicación React
+3. **Deploy** a Azure Static Web Apps
+4. **Environment variables** inyectadas automáticamente
 
-Archivo `.env` en carpeta backend:
+## Arquitectura Cloud
+
 ```
-DB_HOST=mysql
-DB_USER=root
-DB_PASSWORD=rootpassword
-DB_NAME=tienda_mate
-PORT=3000
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Cloudflare     │    │  Azure Static   │    │  Azure Container│
+│  Workers        │◄──►│  Web Apps       │    │  Apps (Backend) │
+│  (Proxy)        │    │  (Frontend)     │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                                              │
+         │              ┌─────────────────┐            │
+         └──────────────►│  Azure MySQL    │◄───────────┘
+                        │  Flexible       │
+                        │  Server         │
+                        └─────────────────┘
 ```
 
-## Capturas del Pipeline
+## Pasos Manuales Requeridos
 
-[Aquí se incluirían capturas de pantalla del pipeline ejecutándose en GitHub Actions]
+**⚠️ Importante**: Algunos pasos requieren intervención manual debido a limitaciones de la cuenta de estudiante de Azure:
 
-## Conclusiones
+1. **Inicialización de base de datos**: Ejecutar `init.sql` manualmente
+2. **Primera imagen Docker**: Subir imagen inicial del backend
+3. **Configuración de Cloudflare Workers**: Setup del proxy para dominio personalizado
+4. **Secretos de GitHub**: Configuración manual de credenciales
 
-Este proyecto demuestra la implementación completa de un flujo DevOps moderno:
+Ver [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md) para instrucciones detalladas.
 
-- **Desarrollo:** Aplicación full-stack funcional
-- **Contenerización:** Docker para portabilidad
-- **Automatización:** CI/CD con GitHub Actions
-- **Testing:** Suite de tests automatizados
-- **Documentación:** Guías claras de uso
+## Monitoreo y Logs
 
-El pipeline permite despliegues seguros y automatizados, reduciendo errores manuales y mejorando la calidad del software.
+```bash
+# Logs del backend en tiempo real
+az containerapp logs show --name tienda-mate-backend --resource-group rg-tienda-mate-prod --follow
+
+# Estado de la aplicación
+curl https://tienda-mate-backend.azurecontainerapps.io/
+
+# Métricas de Azure Container Apps
+az monitor metrics list --resource tienda-mate-backend
+```
 
 ## Autor
 

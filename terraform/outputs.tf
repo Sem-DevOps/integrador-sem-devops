@@ -5,37 +5,16 @@ output "resource_group_name" {
   value       = azurerm_resource_group.main.name
 }
 
-# Frontend outputs - COMENTADO: Ahora usamos Static Web Apps
-/*
-output "frontend_public_ip" {
-  description = "IP pública del frontend"
-  value       = azurerm_public_ip.frontend.ip_address
+# Azure Container Apps backend URL
+output "backend_container_url" {
+  description = "URL HTTPS del backend (Azure Container Apps)"
+  value       = "https://${azurerm_container_app.backend.latest_revision_fqdn}"
 }
 
-output "frontend_url" {
-  description = "URL del frontend"
-  value       = "http://${azurerm_public_ip.frontend.ip_address}"
-}
-
-output "ssh_frontend" {
-  description = "Comando SSH para conectar al frontend"
-  value       = "ssh azureuser@${azurerm_public_ip.frontend.ip_address}"
-}
-*/
-
-output "backend_public_ip" {
-  description = "IP pública del backend"
-  value       = azurerm_public_ip.backend.ip_address
-}
-
-output "backend_url" {
-  description = "URL del backend API"
-  value       = "http://${azurerm_public_ip.backend.ip_address}:3000"
-}
-
-output "ssh_backend" {
-  description = "Comando SSH para conectar al backend"
-  value       = "ssh azureuser@${azurerm_public_ip.backend.ip_address}"
+# Azure Container Registry
+output "container_registry_url" {
+  description = "URL del Azure Container Registry"
+  value       = azurerm_container_registry.main.login_server
 }
 
 output "mysql_server_fqdn" {
@@ -63,11 +42,35 @@ output "mysql_admin_password" {
 # Static Web Apps outputs
 output "static_web_app_url" {
   description = "URL de la aplicación estática (frontend)"
-  value       = "https://${azurerm_static_site.frontend.default_host_name}"
+  value       = var.custom_domain_name != "" ? "https://${var.custom_domain_name}" : "https://${azurerm_static_web_app.frontend.default_host_name}"
+}
+
+output "static_web_app_default_url" {
+  description = "URL por defecto de Azure Static Web Apps"
+  value       = "https://${azurerm_static_web_app.frontend.default_host_name}"
 }
 
 output "static_web_app_api_key" {
   description = "API key para deploy en Static Web Apps"
-  value       = azurerm_static_site.frontend.api_key
+  value       = azurerm_static_web_app.frontend.api_key
   sensitive   = true
 }
+
+# Monitoring outputs
+output "application_insights_connection_string" {
+  description = "Application Insights Connection String"
+  value       = azurerm_application_insights.main.connection_string
+  sensitive   = true
+}
+
+output "application_insights_instrumentation_key" {
+  description = "Application Insights Instrumentation Key"
+  value       = azurerm_application_insights.main.instrumentation_key
+  sensitive   = true
+}
+
+output "log_analytics_workspace_id" {
+  description = "Log Analytics Workspace ID"
+  value       = azurerm_log_analytics_workspace.main.id
+}
+

@@ -1,46 +1,78 @@
-name: Azure Static Web Apps CI/CD
+name: Deploy App
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'frontend-react/**'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-    paths:
-      - 'frontend-react/**'
 
 jobs:
-  build_and_deploy_job:
+  # Deploy Backend (Azure Container Apps)
+  deploy_backend:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+    name: Deploy Backend Container
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Login to Container Registry'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ vars.CONTAINER_REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: 'Build and Push Docker Image'
+        run: |
+          cd backend
+          docker build -t ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:${{ github.sha }} .
+          docker tag ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:${{ github.sha }} ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:latest
+          docker push ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:${{ github.sha }}
+          docker push ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:latest
+
+      - name: 'Deploy to Container Apps'
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          containerAppName: tienda-mate-backend
+          resourceGroup: ${{ vars.RESOURCE_GROUP_NAME }}
+          imageToDeploy: ${{ vars.CONTAINER_REGISTRY_URL }}/tienda-mate-backend:${{ github.sha }}
+
+  # Deploy Frontend (Static Web Apps)
+  deploy_frontend:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Deploy Frontend
+    needs: deploy_backend  # Deploy frontend after backend to ensure correct API URL
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
       
-      - name: Build And Deploy
+      - name: Build And Deploy Static Web App
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/frontend-react" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "/frontend-react"
+          api_location: ""
+          output_location: "dist"
           
         env:
-          # Esta variable se usará durante el build para configurar la API URL
-          VITE_API_URL: ${{ vars.BACKEND_API_URL || 'http://localhost:3000' }}
+          # URL del backend Azure Container Apps
+          VITE_API_URL: ${{ vars.BACKEND_API_URL || 'https://tienda-mate-backend.azurecontainerapps.io' }}
 
+  # Close PR job
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest

@@ -1,3 +1,20 @@
+// Application Insights debe ser importado PRIMERO
+if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+    const appInsights = require('applicationinsights');
+    appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+        .setAutoDependencyCorrelation(true)
+        .setAutoCollectRequests(true)
+        .setAutoCollectPerformance(true, true)
+        .setAutoCollectExceptions(true)
+        .setAutoCollectDependencies(true)
+        .setAutoCollectConsole(true)
+        .setUseDiskRetryCaching(true)
+        .setSendLiveMetrics(false)
+        .setDistributedTracingMode(appInsights.DistributedTracingModes.AI);
+    appInsights.start();
+    console.log('✅ Application Insights habilitado');
+}
+
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
@@ -75,6 +92,7 @@ async function connectDB() {
         process.exit(1);
     }
 }
+
 
 // Rutas
 app.get('/', (req, res) => {
@@ -277,6 +295,8 @@ app.use((error, req, res, next) => {
 if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+        console.log(`📊 Base de datos: ${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`);
+        console.log(`🌐 Endpoints disponibles: /api/contacto, /api/trabajo, /api/franquicias, /api/newsletter`);
     });
 }
 

@@ -17,271 +17,13 @@ resource "azurerm_resource_group" "main" {
   }
 }
 
-# Virtual Network
-resource "azurerm_virtual_network" "main" {
-  name                = "${var.project_name}-vnet"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+# VNet no necesaria para Container Apps - removida
 
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-  }
-}
-
-# Subnet
-resource "azurerm_subnet" "internal" {
-  name                 = "internal"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.2.0/24"]
-}
-
-# Public IP para Frontend - COMENTADO: Ahora usamos Static Web Apps
-/*
-resource "azurerm_public_ip" "frontend" {
-  name                = "${var.project_name}-frontend-ip"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  allocation_method   = "Static"
-  sku                = "Standard"
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "frontend"
-  }
-}
-*/
-
-# Public IP para Backend
-resource "azurerm_public_ip" "backend" {
-  name                = "${var.project_name}-backend-ip"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  allocation_method   = "Static"
-  sku                = "Standard"
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "backend"
-  }
-}
-
-# Security Group
-resource "azurerm_network_security_group" "main" {
-  name                = "${var.project_name}-nsg"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-
-  security_rule {
-    name                       = "SSH"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                       = "HTTP"
-    priority                   = 1002
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                       = "HTTPS"
-    priority                   = 1003
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                       = "NodeJS"
-    priority                   = 1004
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "3000"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-  }
-}
-
-# Network Interface para Frontend - COMENTADO: Ahora usamos Static Web Apps
-/*
-resource "azurerm_network_interface" "frontend" {
-  name                = "${var.project_name}-frontend-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.internal.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.frontend.id
-  }
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "frontend"
-  }
-}
-*/
-
-# Network Interface para Backend
-resource "azurerm_network_interface" "backend" {
-  name                = "${var.project_name}-backend-nic"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.internal.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.backend.id
-  }
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "backend"
-  }
-}
-
-# Asociar Security Group a las NICs - Frontend COMENTADO: Ahora usamos Static Web Apps
-/*
-resource "azurerm_network_interface_security_group_association" "frontend" {
-  network_interface_id      = azurerm_network_interface.frontend.id
-  network_security_group_id = azurerm_network_security_group.main.id
-}
-*/
-
-resource "azurerm_network_interface_security_group_association" "backend" {
-  network_interface_id      = azurerm_network_interface.backend.id
-  network_security_group_id = azurerm_network_security_group.main.id
-}
-
-# VM para Frontend con auto-setup - COMENTADO: Ahora usamos Static Web Apps
-/*
-resource "azurerm_linux_virtual_machine" "frontend" {
-  name                = "${var.project_name}-frontend-vm"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  size                = "Standard_B1s"  # Usa familia Bsv2 que tienes disponible
-  admin_username      = "azureuser"
-
-  disable_password_authentication = true
-
-  network_interface_ids = [
-    azurerm_network_interface.frontend.id,
-  ]
-
-  admin_ssh_key {
-    username   = "azureuser"
-    public_key = var.ssh_public_key
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
-  }
-
-  # Script de inicialización automática
-  custom_data = base64encode(templatefile("${path.module}/scripts/frontend-setup.sh", {
-    repo_url = var.github_repo_url
-    backend_ip = azurerm_public_ip.backend.ip_address
-  }))
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "frontend"
-  }
-}
-*/
-
-# VM para Backend con auto-setup
-resource "azurerm_linux_virtual_machine" "backend" {
-  name                = "${var.project_name}-backend-vm"
-  resource_group_name = azurerm_resource_group.main.name
-  location            = azurerm_resource_group.main.location
-  size                = "Standard_B1s"  # Usa familia Bsv2 que tienes disponible
-  admin_username      = "azureuser"
-
-  disable_password_authentication = true
-
-  network_interface_ids = [
-    azurerm_network_interface.backend.id,
-  ]
-
-  admin_ssh_key {
-    username   = "azureuser"
-    public_key = var.ssh_public_key
-  }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
-  }
-
-  # Script de inicialización automática
-  custom_data = base64encode(templatefile("${path.module}/scripts/backend-setup.sh", {
-    repo_url = var.github_repo_url
-    mysql_host = azurerm_mysql_flexible_server.main.fqdn
-    mysql_user = var.mysql_admin_username
-    mysql_password = var.mysql_admin_password != "" ? var.mysql_admin_password : random_password.mysql_password[0].result
-    mysql_database = azurerm_mysql_flexible_database.main.name
-  }))
-
-  tags = {
-    Environment = var.environment
-    Project     = var.project_name
-    Component   = "backend"
-  }
-}
 
 # MySQL Flexible Server
 resource "azurerm_mysql_flexible_server" "main" {
-  name                = "${var.project_name}-mysql"
-  location            = azurerm_resource_group.main.location
+  name                = "${var.project_name}-mysql-v2"
+  location            = "West US 2"  # Región donde funciona para estudiantes
   resource_group_name = azurerm_resource_group.main.name
 
   administrator_login    = var.mysql_admin_username
@@ -312,6 +54,11 @@ resource "azurerm_mysql_flexible_database" "main" {
   server_name         = azurerm_mysql_flexible_server.main.name
   charset             = "utf8mb4"
   collation           = "utf8mb4_unicode_ci"
+
+
+  depends_on = [
+    azurerm_mysql_flexible_server_firewall_rule.allow_all_ips
+  ]
 }
 
 # MySQL Firewall Rule
@@ -331,11 +78,12 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "allow_all_ips" {
   end_ip_address      = "255.255.255.255"
 }
 
-# Azure Static Web Apps para el Frontend
-resource "azurerm_static_site" "frontend" {
-  name                = "${var.project_name}-frontend"
+
+# Azure Static Web Apps para el Frontend (nueva versión)
+resource "azurerm_static_web_app" "frontend" {
+  name                = "${var.project_name}-app"
   resource_group_name = azurerm_resource_group.main.name
-  location            = "East US 2"  # Static Web Apps solo disponible en ciertas regiones
+  location            = "East US 2"
   sku_tier           = "Free"
   sku_size           = "Free"
 
@@ -343,5 +91,161 @@ resource "azurerm_static_site" "frontend" {
     Environment = var.environment
     Project     = var.project_name
     Component   = "frontend"
+  }
+}
+
+
+# Azure Container Registry
+resource "azurerm_container_registry" "main" {
+  name                = "${replace(var.project_name, "-", "")}acrv2"
+  resource_group_name = azurerm_resource_group.main.name
+  location            = azurerm_resource_group.main.location
+  sku                 = "Basic"
+  admin_enabled       = true
+
+  depends_on = [azurerm_resource_group.main]
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    Component   = "container-registry"
+  }
+}
+
+# Log Analytics Workspace (requerido para Container Apps)
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = "${var.project_name}-logs-v2"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+
+  depends_on = [azurerm_resource_group.main]
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    Component   = "logging"
+  }
+}
+
+# Application Insights para monitoreo avanzado
+resource "azurerm_application_insights" "main" {
+  name                = "${var.project_name}-insights"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  workspace_id        = azurerm_log_analytics_workspace.main.id
+  application_type    = "web"
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    Component   = "monitoring"
+  }
+}
+
+# Container Apps Environment
+resource "azurerm_container_app_environment" "main" {
+  name                       = "${var.project_name}-env-v2"
+  location                   = azurerm_resource_group.main.location
+  resource_group_name        = azurerm_resource_group.main.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  depends_on = [
+    azurerm_resource_group.main,
+    azurerm_log_analytics_workspace.main,
+    azurerm_resource_provider_registration.container_apps
+  ]
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    Component   = "container-environment"
+  }
+}
+
+# Container App para el Backend
+resource "azurerm_container_app" "backend" {
+  name                         = "${var.project_name}-backend"
+  container_app_environment_id = azurerm_container_app_environment.main.id
+  resource_group_name          = azurerm_resource_group.main.name
+  revision_mode                = "Single"
+
+  template {
+    container {
+      name   = "backend"
+      image  = "${azurerm_container_registry.main.login_server}/tienda-mate-backend:latest"
+      cpu    = 0.25
+      memory = "0.5Gi"
+
+      env {
+        name  = "DB_HOST"
+        value = azurerm_mysql_flexible_server.main.fqdn
+      }
+      env {
+        name  = "DB_USER"
+        value = var.mysql_admin_username
+      }
+      env {
+        name        = "DB_PASSWORD"
+        secret_name = "db-password"
+      }
+      env {
+        name  = "DB_NAME"
+        value = azurerm_mysql_flexible_database.main.name
+      }
+      env {
+        name  = "DB_PORT"
+        value = "3306"
+      }
+      env {
+        name  = "NODE_ENV"
+        value = "production"
+      }
+      env {
+        name  = "PORT"
+        value = "3000"
+      }
+      env {
+        name  = "APPLICATIONINSIGHTS_CONNECTION_STRING"
+        value = azurerm_application_insights.main.connection_string
+      }
+    }
+
+    min_replicas = 0
+    max_replicas = 2
+  }
+
+  secret {
+    name  = "db-password"
+    value = var.mysql_admin_password != "" ? var.mysql_admin_password : random_password.mysql_password[0].result
+  }
+
+  secret {
+    name  = "registry-password"
+    value = azurerm_container_registry.main.admin_password
+  }
+
+  registry {
+    server               = azurerm_container_registry.main.login_server
+    username             = azurerm_container_registry.main.admin_username
+    password_secret_name = "registry-password"
+  }
+
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 3000
+    
+    traffic_weight {
+      percentage      = 100
+      latest_revision = true
+    }
+  }
+
+  tags = {
+    Environment = var.environment
+    Project     = var.project_name
+    Component   = "backend"
   }
 }

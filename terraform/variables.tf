@@ -39,7 +39,7 @@ variable "environment" {
 variable "location" {
   description = "Azure region"
   type        = string
-  default     = "West US 2"
+  default     = "East US"
 }
 
 variable "resource_name_base" {
@@ -85,4 +85,10 @@ variable "mysql_storage_gb" {
   description = "Storage en GB para MySQL Flexible Server"
   type        = number
   default     = 20
+}
+
+variable "custom_domain_name" {
+  description = "Nombre de dominio personalizado (opcional). Ej: 'tienda-mate.com'"
+  type        = string
+  default     = ""
 }

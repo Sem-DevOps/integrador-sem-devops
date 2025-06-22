@@ -26,3 +26,8 @@ provider "azurerm" {
   client_secret   = var.azure_client_secret
   tenant_id       = var.azure_tenant_id
 }
+
+# Registrar proveedores de recursos necesarios
+resource "azurerm_resource_provider_registration" "container_apps" {
+  name = "Microsoft.App"
+}
