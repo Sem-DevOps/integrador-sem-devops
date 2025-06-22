@@ -7,6 +7,7 @@ COPY package*.json ./
 
 RUN npm install 
 COPY src/ ./src/
+COPY certs/ ./certs/
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
