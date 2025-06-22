@@ -72,7 +72,9 @@ const Jobs = () => {
       console.log(formDataToSend);
       const response = await fetch(`${API_URL}/api/trabajo`, {
         method: "POST",
-        body: formDataToSend, 
+        body: formDataToSend,
+        mode: 'cors',
+        credentials: 'omit'
       });
 
       if (response.ok) {

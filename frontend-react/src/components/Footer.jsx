@@ -15,7 +15,9 @@ const Footer = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email }),
+        mode: 'cors',
+        credentials: 'omit'
       });
 
       if (response.ok) {

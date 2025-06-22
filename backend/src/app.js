@@ -65,16 +65,21 @@ const upload = multer({
     }
 });
 
-// Permitir todos los orígenes
-const corsOptions = {
-    origin: true,  
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
+// CORS simple - permitir todo sin restricciones
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
 
-// Middleware
-app.use(cors(corsOptions));
+// También usar la librería cors como backup
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Servir archivos subidos
