@@ -1,10 +1,5 @@
 # Trabajo Práctico Integrador de DevOps - Tienda de Mate
 
-## 🌐 Aplicación Desplegada
-
-**Frontend**: https://tienda-mate.devoperations-it.workers.dev/
-**Backend API**: https://tienda-mate-backend.azurecontainerapps.io
-
 ## Descripción del Proyecto
 
 Este proyecto implementa una aplicación web completa de una tienda de mate desplegada en Azure Cloud, aplicando las prácticas y herramientas de DevOps modernas. La aplicación incluye frontend React, backend Node.js con API REST, base de datos MySQL y está completamente containerizada con pipeline de CI/CD automatizado.
@@ -40,7 +35,7 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 ```
 ├── frontend-react/     # Frontend React + Vite
 ├── backend/           # API Node.js + Express
-├── database/          # Scripts SQL + Migraciones
+├── database/          # Scripts SQL
 ├── terraform/         # Infrastructure as Code
 ├── .github/workflows/ # Pipeline CI/CD
 ├── docker-compose.yml # Desarrollo local
@@ -103,7 +98,7 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 - **SSL automático** y dominio personalizado
 - **Escalabilidad** automática basada en demanda
 
-### 8. Monitoreo ✅ (Opcional)
+### 8. Monitoreo ✓
 - **Azure Application Insights** integrado
 - **Logs automáticos** de toda la aplicación
 - **Métricas de performance** en tiempo real
@@ -118,7 +113,7 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/tu-usuario/integrador-sem-devops
+git clone https://github.com/Sem-DevOps/integrador-sem-devops
 cd integrador-sem-devops
 
 # Levantar servicios
@@ -172,7 +167,7 @@ npm run test:coverage # Con reporte coverage
 
 ## Endpoints API
 
-**Base URL**: https://tienda-mate-backend.azurecontainerapps.io
+**Base URL**: Obtener desde el portal de Azure 
 
 - `GET /` - Health check API
 - `POST /api/contacto` - Enviar mensaje de contacto
@@ -229,9 +224,6 @@ Ver [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md) para instrucciones detalladas.
 ```bash
 # Logs del backend en tiempo real
 az containerapp logs show --name tienda-mate-backend --resource-group rg-tienda-mate-prod --follow
-
-# Estado de la aplicación
-curl https://tienda-mate-backend.azurecontainerapps.io/
 
 # Métricas de Azure Container Apps
 az monitor metrics list --resource tienda-mate-backend
