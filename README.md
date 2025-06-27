@@ -46,7 +46,6 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 ## 🚀 Links Importantes
 
 - **📖 Guía Completa de Deployment**: [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md)
-- **📊 Guía de Monitoreo**: [MONITORING.md](./MONITORING.md)
 - **🌐 Aplicación Live**: https://tienda-mate.devoperations-it.workers.dev/
 - **🔧 Backend API**: https://tienda-mate-backend.azurecontainerapps.io
 - **🚀 Pipeline CI/CD**: [GitHub Actions](./.github/workflows/frontend-deploy.yml)
@@ -99,13 +98,9 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 - **Escalabilidad** automática basada en demanda
 
 ### 8. Monitoreo ✓
-- **Azure Application Insights** integrado
-- **Logs automáticos** de toda la aplicación
-- **Métricas de performance** en tiempo real
-- **Alertas proactivas** para errores y performance
-- **Dashboards personalizados** con KPIs de negocio
-- **Trazabilidad completa** de requests y errores
-- **Log Analytics** para queries avanzadas
+- **Azure Application Insights** configurado
+- **Log Analytics Workspace** con 30 días de retención
+- **Logs básicos** del Container App disponibles
 
 ## Instrucciones para Desarrollo Local
 
@@ -221,12 +216,15 @@ Ver [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md) para instrucciones detalladas.
 
 ## Monitoreo y Logs
 
+**Infraestructura configurada:**
+- Azure Application Insights: `tienda-mate-insights`
+- Log Analytics Workspace: `tienda-mate-logs-v2` (retención 30 días)
+- Connection string configurado en el Container App
+
+**Comandos útiles:**
 ```bash
 # Logs del backend en tiempo real
 az containerapp logs show --name tienda-mate-backend --resource-group rg-tienda-mate-prod --follow
-
-# Métricas de Azure Container Apps
-az monitor metrics list --resource tienda-mate-backend
 ```
 
 ## Autor
