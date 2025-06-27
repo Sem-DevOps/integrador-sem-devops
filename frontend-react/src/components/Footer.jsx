@@ -79,7 +79,7 @@ const Footer = () => {
       </div>
       <div className="copyright">
         <div className="container">
-          <p>© 2024 Tienda de Mate - Todos los derechos reservados</p>
+          <p>© 2025 Tienda de Mate - Todos los derechos reservados -  Ailín Ojeda Pytel - Ciro Villasanti </p>
         </div>
       </div>
     </footer>

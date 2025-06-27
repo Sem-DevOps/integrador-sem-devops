@@ -47,7 +47,7 @@ Este proyecto implementa una aplicación web completa de una tienda de mate desp
 
 - **📖 Guía Completa de Deployment**: [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md)
 - **🌐 Aplicación Live**: https://tienda-mate.devoperations-it.workers.dev/
-- **🔧 Backend API**: https://tienda-mate-backend.azurecontainerapps.io
+- **🔧 Backend API**: https://tienda-mate-backend.azurecontainerapps.io - NOTA: La URL real debe tomarse de los outputs de terraform.
 - **🚀 Pipeline CI/CD**: [GitHub Actions](./.github/workflows/frontend-deploy.yml)
 - **📈 Application Insights**: Azure Portal → Application Insights → tienda-mate-insights
 
