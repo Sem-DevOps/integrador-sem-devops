@@ -7,7 +7,7 @@ const HeroSection = () => {
 
   const slides = [
     {
-      title: "Tu mate preferido",
+      title: "Tu mate favorito",
       subtitle: "SIEMPRE CERCA",
       description: "Yerbas selectas, mates artesanales y accesorios.\nEncontrá tu Tienda mas cercana y descubrí nuestros productos.",
       buttonText: "",
